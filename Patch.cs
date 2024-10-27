@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using UnityEngine;
 
-namespace MainBpmChanger
+namespace ChangeLobbyBgm
 {
     [HarmonyPatch(typeof(ffxMenuPlanetSpeedChange), "Awake")]
     public static class Patch1

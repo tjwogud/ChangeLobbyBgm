@@ -1,15 +1,11 @@
 ﻿using DG.Tweening;
-using HarmonyLib;
-using System.Linq;
-using System.Reflection;
 using UnityEngine;
 
-namespace MainBpmChanger
+namespace ChangeLobbyBgm
 {
     public class ffxMenuPlanetSpeedChange2 : ffxBase
     {
         private bool changed = false;
-        private float pitch = -1;
 
         public override void Awake()
         {
@@ -17,6 +13,15 @@ namespace MainBpmChanger
             floor.topGlow.enabled = false;
             floor.floorIcon = FloorIcon.Rabbit;
             floor.UpdateIconSprite();
+            if (Main.Settings.customMusic)
+            {
+                Main.LoadMusic(Main.Settings.defaultMusicPath, true);
+                scrConductor.instance.song.volume = 1;
+                scrConductor.instance.song.pitch = 1;
+                Main.LoadMusic(Main.Settings.fastMusicPath, false);
+                scrConductor.instance.song2.volume = 0;
+                scrConductor.instance.song2.pitch = Main.Settings.multiplyMusic ? (Main.Settings.fastBpm / Main.Settings.defaultBpm) : 1;
+            }
         }
 
         public void Start()
@@ -27,56 +32,37 @@ namespace MainBpmChanger
         
         public override void doEffect()
         {
-            if (!changed)
+            if (changed)
             {
-                floor.floorIcon = FloorIcon.Snail;
-                pitch = -1;
-                changed = true;
-            }
-            else
-            {
-                ctrl.speed = 1.0;
+                ctrl.speed = Main.Settings.defaultBpm / 100d;
                 floor.floorIcon = FloorIcon.Rabbit;
                 cond.song.DOKill();
                 cond.song2.DOKill();
-                cond.song2.DOFade(0, 0.2f);
-                cond.song.pitch = 0.8f;
-                cond.song2.pitch = 0.8f;
+                if (Main.Settings.customMusic)
+                {
+                    cond.song.DOFade(1, 0.2f);
+                    cond.song2.DOFade(0, 0.2f);
+                }
+                else
+                    cond.song2.DOFade(0, 0.2f);
                 changed = false;
             }
+            else
+            {
+                ctrl.speed = Main.Settings.fastBpm / 100d;
+                floor.floorIcon = FloorIcon.Snail;
+                cond.song.DOKill();
+                cond.song2.DOKill();
+                if (Main.Settings.customMusic)
+                {
+                    cond.song.DOFade(0, 0.2f);
+                    cond.song2.DOFade(1, 0.2f);
+                }
+                else
+                    cond.song2.DOFade(0.7f, 0.2f);
+                changed = true;
+            }
             floor.UpdateIconSprite();
-        }
-
-        public void Update()
-        {
-            if (!changed)
-                return;
-            ctrl.speed = Main.Settings.multiplyMusic ? 1 : Main.Settings.pitch / 100;
-            //ctrl.speed = Main.Settings.pitch / 100;
-            if (Main.Settings.changeMusic && cond.song2.volume == 0)
-            {
-                DOTween.TweensByTarget(cond.song2)?.Where(tween => tween.stringId == "fade").ToList().ForEach(tween => tween.Kill());
-                cond.song2.DOFade(0.7f, 0.2f).SetId("fade");
-            }
-            if (!Main.Settings.changeMusic && cond.song2.volume != 0)
-            {
-                DOTween.TweensByTarget(cond.song2)?.Where(tween => tween.stringId == "fade").ToList().ForEach(tween => tween.Kill());
-                cond.song2.DOFade(0, 0.2f);
-            }
-            if (Main.Settings.multiplyMusic && pitch != Main.Settings.pitch / 100)
-            {
-                pitch = Main.Settings.pitch / 100;
-                cond.song.pitch = pitch * 0.8f;
-                cond.song2.pitch = pitch * 0.8f;
-            }
-            if (!Main.Settings.multiplyMusic && pitch != -1)
-            {
-                pitch = -1;
-                cond.song.pitch = 0.8f;
-                cond.song2.pitch = 0.8f;
-            }
-            if (cond.song.time != cond.song2.time)
-                cond.song2.time = cond.song.time;
         }
     }
 }
