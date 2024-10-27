@@ -13,6 +13,7 @@ namespace ChangeLobbyBgm
             floor.topGlow.enabled = false;
             floor.floorIcon = FloorIcon.Rabbit;
             floor.UpdateIconSprite();
+            ctrl.speed = Main.Settings.defaultBpm / 100d;
             if (Main.Settings.customMusic)
             {
                 Main.LoadMusic(Main.Settings.defaultMusicPath, true);
