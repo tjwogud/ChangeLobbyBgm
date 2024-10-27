@@ -26,7 +26,6 @@ namespace ChangeLobbyBgm
                         { "settings.defaultBpm", "기본 BPM" },
                         { "settings.fastBpm", "빨라질 시 BPM" },
                         { "settings.fastMusic", "속도 변경 시 음악 변경" },
-                        { "settings.multiplyMusic", "속도 변경 시 음악 배속" },
                         { "settings.customMusic", "음악 변경" },
                         { "settings.defaultMusicPath", "기본 음악" },
                         { "settings.fastMusicPath", "빨라질 시 음악" },
@@ -43,7 +42,6 @@ namespace ChangeLobbyBgm
                         { "settings.defaultBpm", "Default BPM" },
                         { "settings.fastBpm", "Faster BPM" },
                         { "settings.fastMusic", "Change bgm when changing speed" },
-                        { "settings.multiplyMusic", "Speed up bgm when changing speed" },
                         { "settings.customMusic", "Custom bgm" },
                         { "settings.defaultMusicPath", "Default bgm" },
                         { "settings.fastMusicPath", "Faster bgm" },
@@ -85,7 +83,6 @@ namespace ChangeLobbyBgm
         private static string fastMusicPathCache;
         private static bool loadingDefault;
         private static bool loadingFast;
-        private static bool refresh;
 
         public static AudioClip defaultBgm;
         public static AudioClip fastBgm;
@@ -128,9 +125,6 @@ namespace ChangeLobbyBgm
             GUILayout.Space(10);
 
             Settings.fastMusic = GUILayout.Toggle(Settings.fastMusic, localizations["settings.fastMusic"]);
-            GUILayout.Space(10);
-
-            Settings.multiplyMusic = GUILayout.Toggle(Settings.multiplyMusic, localizations["settings.multiplyMusic"]);
             GUILayout.Space(20);
 
             Settings.customMusic = GUILayout.Toggle(Settings.customMusic, localizations["settings.customMusic"]);
