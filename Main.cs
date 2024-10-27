@@ -37,7 +37,7 @@ namespace ChangeLobbyBgm
                 {
                     SystemLanguage.English, new Dictionary<string, string>
                     {
-                        { "settings.apply", "Faster BPM" },
+                        { "settings.apply", "Apply" },
                         { "settings.loading", "Loading..." },
                         { "settings.defaultBpm", "Default BPM" },
                         { "settings.fastBpm", "Faster BPM" },
@@ -130,14 +130,14 @@ namespace ChangeLobbyBgm
             Settings.customMusic = GUILayout.Toggle(Settings.customMusic, localizations["settings.customMusic"]);
             
             GUILayout.BeginHorizontal();
-            GUILayout.Label(localizations["settings.default"], GUILayout.Width(30));
+            GUILayout.Label(localizations["settings.default"], GUILayout.Width(50));
             GUILayout.Space(5);
             defaultMusicPathCache = GUILayout.TextField(defaultMusicPathCache, GUILayout.Width(300));
             GUILayout.Space(5);
             if (!loadingDefault)
             {
                 if (defaultMusicPathCache != Settings.defaultMusicPath)
-                    if (File.Exists(defaultMusicPathCache) && GUILayout.Button(localizations["settings.apply"], GUILayout.Width(70)))
+                    if (GUILayout.Button(localizations["settings.apply"], GUILayout.Width(70)))
                     {
                         Settings.defaultMusicPath = defaultMusicPathCache;
                         LoadMusic(defaultMusicPathCache, true);
@@ -149,14 +149,14 @@ namespace ChangeLobbyBgm
             GUILayout.Space(10);
 
             GUILayout.BeginHorizontal();
-            GUILayout.Label(localizations["settings.fast"], GUILayout.Width(30));
+            GUILayout.Label(localizations["settings.fast"], GUILayout.Width(50));
             GUILayout.Space(5);
             fastMusicPathCache = GUILayout.TextField(fastMusicPathCache, GUILayout.Width(300));
             GUILayout.Space(5);
             if (!loadingFast)
             {
                 if (fastMusicPathCache != Settings.fastMusicPath)
-                    if (File.Exists(fastMusicPathCache) && GUILayout.Button(localizations["settings.apply"], GUILayout.Width(70)))
+                    if (GUILayout.Button(localizations["settings.apply"], GUILayout.Width(70)))
                     {
                         Settings.fastMusicPath = fastMusicPathCache;
                         LoadMusic(fastMusicPathCache, false);

@@ -53,13 +53,14 @@ namespace ChangeLobbyBgm
                 floor.floorIcon = FloorIcon.Snail;
                 cond.song.DOKill();
                 cond.song2.DOKill();
-                if (Main.Settings.customMusic)
-                {
-                    cond.song.DOFade(0, 0.2f);
-                    cond.song2.DOFade(1, 0.2f);
-                }
-                else
-                    cond.song2.DOFade(0.7f, 0.2f);
+                if (Main.Settings.fastMusic)
+                    if (Main.Settings.customMusic)
+                    {
+                        cond.song.DOFade(0, 0.2f);
+                        cond.song2.DOFade(1, 0.2f);
+                    }
+                    else
+                        cond.song2.DOFade(0.7f, 0.2f);
                 changed = true;
             }
             floor.UpdateIconSprite();
