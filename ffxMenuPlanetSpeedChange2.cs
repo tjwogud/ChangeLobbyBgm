@@ -20,7 +20,7 @@ namespace ChangeLobbyBgm
                 scrConductor.instance.song.pitch = 1;
                 Main.LoadMusic(Main.Settings.fastMusicPath, false);
                 scrConductor.instance.song2.volume = 0;
-                scrConductor.instance.song2.pitch = 1;
+                scrConductor.instance.song2.pitch = Main.Settings.multiplyMusic ? (Main.Settings.fastBpm / Main.Settings.defaultBpm) : 1;
             }
         }
 

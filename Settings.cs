@@ -15,6 +15,7 @@ namespace ChangeLobbyBgm
 
         public float defaultBpm = 100;
         public float fastBpm = 100;
+        public bool fastMusic = true;
         public bool multiplyMusic = false;
         public bool customMusic = false;
         public string defaultMusicPath;
